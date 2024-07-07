@@ -3,12 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Amplify } from 'aws-amplify';
 import outputs from "@/amplify_outputs.json";
-import ConfigureAmplifyClientSide from "./components/ConfigureAmplifyClientSide ";
+import ConfigureAmplifyClientSide from "../components/ConfigureAmplifyClientSide ";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 Amplify.configure(outputs);
-
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Amplify AI Apps",
@@ -25,7 +24,9 @@ export default function RootLayout({
       <body className="flex flex-col h-screen">
         <ConfigureAmplifyClientSide />
         <>
+          <Header></Header>
           {children}
+          <Footer></Footer>
         </>
       </body>
     </html>
