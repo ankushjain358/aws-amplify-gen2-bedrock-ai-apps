@@ -2,7 +2,7 @@
 
 import { Schema } from "@/amplify/data/resource";
 import { Authenticator, Input } from "@aws-amplify/ui-react"
-import { StorageManager } from '@aws-amplify/ui-react-storage';
+import { StorageManager, StorageImage } from '@aws-amplify/ui-react-storage';
 import '@aws-amplify/ui-react/styles.css';
 import { generateClient } from "aws-amplify/api";
 import { useForm } from "react-hook-form";
@@ -229,6 +229,7 @@ function InstagramCaptionsGeneratorComponent() {
                     <CardHeader>
                         <CardTitle>Result</CardTitle>
                         <CardDescription>
+                            <StorageImage alt={form.getValues('s3Key')} path={form.getValues('s3Key')} maxHeight="200px" maxWidth="100%" />
                             <div className="content" dangerouslySetInnerHTML={{ __html: apiResponse }}></div>
                         </CardDescription>
                     </CardHeader>
