@@ -46,6 +46,7 @@ function InstagramCaptionsGeneratorComponent() {
 
     const client = generateClient<Schema>()
     const storageManagerRef = React.useRef<any>(null);
+    const [apiResponse, setApiResponse] = React.useState<string>("");
 
     // 1. Define  schema.
     const formSchema = z.object({
@@ -86,7 +87,7 @@ function InstagramCaptionsGeneratorComponent() {
             return;
         }
 
-        // setApiResponse(data?.content);
+        setApiResponse(data?.content!);
     }
 
     const processFile = (params: any): any => {
@@ -103,8 +104,8 @@ function InstagramCaptionsGeneratorComponent() {
 
     return (
         <>
-            <div className="flex justify-between">
-                <Card className="w-5/12 me-5">
+            <div className="flex flex-col md:flex-row justify-between">
+                <Card className="w-full md:w-5/12 mb-4 md:mb-0 md:mr-5">
                     <CardHeader>
                         <CardTitle>{AppNames.INSTAGRAM_CAPTIONS_GENERATOR} </CardTitle>
                         <CardDescription>
@@ -126,6 +127,7 @@ function InstagramCaptionsGeneratorComponent() {
                                                 maxFileCount={1}
                                                 ref={storageManagerRef}
                                                 processFile={processFile}
+                                                maxFileSize={3 * 1048576} // Limit it to 3 MB, since claude model does not allow more than 3.75 MB for the image
                                                 displayText={{
                                                     dropFilesText: 'Drop your image here or',
                                                 }}
@@ -221,6 +223,16 @@ function InstagramCaptionsGeneratorComponent() {
                                 </div>
                             </form>
                         </Form>
+                    </CardContent>
+                </Card>
+                <Card className="w-full md:w-7/12">
+                    <CardHeader>
+                        <CardTitle>Result</CardTitle>
+                        <CardDescription>
+                            <div className="content" dangerouslySetInnerHTML={{ __html: apiResponse }}></div>
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
                     </CardContent>
                 </Card>
             </div>

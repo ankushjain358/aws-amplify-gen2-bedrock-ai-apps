@@ -9,6 +9,10 @@ specifies that any unauthenticated user can "create", "read", "update",
 and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
+
+  genericAPIResponse: a.customType({
+    content: a.string()
+  }),
   generateInstagramCaptions: a
     .query()
     .arguments({
@@ -17,7 +21,7 @@ const schema = a.schema({
       captionCount: a.integer(),
       includeEmojis: a.boolean()
     })
-    .returns(a.string())
+    .returns(a.ref('genericAPIResponse'))
     .handler(a.handler.function(instagramCaptionsGenerator))
     .authorization((allow) => [allow.authenticated()]),
   rephraseText: a
@@ -26,7 +30,7 @@ const schema = a.schema({
       text: a.string().required(),
       additionalPrompt: a.string(),
     })
-    .returns(a.string())
+    .returns(a.ref('genericAPIResponse'))
     .handler(a.handler.function(textRephraser))
     .authorization((allow) => [allow.authenticated()]),
 });
