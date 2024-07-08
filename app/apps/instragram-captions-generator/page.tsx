@@ -229,7 +229,9 @@ function InstagramCaptionsGeneratorComponent() {
                     <CardHeader>
                         <CardTitle>Result</CardTitle>
                         <CardDescription>
-                            <StorageImage alt={form.getValues('s3Key')} path={form.getValues('s3Key')} maxHeight="200px" maxWidth="100%" />
+                            {form.getValues('s3Key') &&
+                                <StorageImage alt={form.getValues('s3Key')} path={form.getValues('s3Key')} maxHeight="200px" maxWidth="100%" />
+                            }
                             <div className="content" dangerouslySetInnerHTML={{ __html: apiResponse }}></div>
                         </CardDescription>
                     </CardHeader>
