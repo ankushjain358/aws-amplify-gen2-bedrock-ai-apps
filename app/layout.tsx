@@ -6,6 +6,7 @@ import outputs from "@/amplify_outputs.json";
 import ConfigureAmplifyClientSide from "../components/ConfigureAmplifyClientSide ";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Toaster } from "react-hot-toast";
 
 Amplify.configure(outputs);
 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex flex-col h-screen">
         <ConfigureAmplifyClientSide />
+        <Toaster />
         <>
           <Header></Header>
           {children}
