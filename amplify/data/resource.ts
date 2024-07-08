@@ -13,7 +13,9 @@ const schema = a.schema({
     .query()
     .arguments({
       s3Key: a.string().required(),
-      additionalPrompt: a.string(),
+      context: a.string(),
+      captionCount: a.integer(),
+      includeEmojis: a.boolean()
     })
     .returns(a.string())
     .handler(a.handler.function(instagramCaptionsGenerator))
