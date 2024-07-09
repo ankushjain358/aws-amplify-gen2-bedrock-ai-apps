@@ -1,11 +1,11 @@
-export interface App {
-    title: string;
-    description: string;
-    path: string;
-}
+
 export interface MenuItem {
     title: string;
     path: string;
+}
+
+export interface App extends MenuItem {
+    description: string;
 }
 
 interface IAppConstants {

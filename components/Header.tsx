@@ -1,7 +1,7 @@
 "use client"
 
 import { AppConstants } from "@/utils/AppConstants";
-import { CircleChevronDown, MenuIcon, SparkleIcon, XIcon } from "lucide-react";
+import { CircleChevronDown, MenuIcon, SparkleIcon, SparklesIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { fetchAuthSession, getCurrentUser, signOut } from 'aws-amplify/auth';
 import { Button } from "./ui/button";
+import EventService from "@/utils/EventService";
 
 export default function Header() {
-    const [username, setUsername] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pathname = usePathname();
 
@@ -26,15 +27,27 @@ export default function Header() {
     };
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchUserInfo() {
             const { userSub } = await fetchAuthSession();
             if (userSub) {
-                const { signInDetails } = await getCurrentUser();
-                setUsername(signInDetails?.loginId!);
+                setIsLoggedIn(true);
             }
         }
 
-        fetchData();
+        const subscriptionSignedIn = EventService.subscribe('signedIn', (data) => {
+            setIsLoggedIn(true);
+        });
+        const subscriptionSignedOut = EventService.subscribe('signedOut', (data) => {
+            setIsLoggedIn(false);
+        });
+
+        fetchUserInfo();
+
+        // Clean up subscription on component unmount
+        return () => {
+            EventService.unsubscribe(subscriptionSignedIn);
+            EventService.unsubscribe(subscriptionSignedOut);
+        };
     }, []);
 
     return (
@@ -43,7 +56,7 @@ export default function Header() {
                 <div className="flex flex-wrap justify-between max-w-screen-xl px-4 mx-auto">
                     <Link href="/" legacyBehavior>
                         <a className="flex items-center">
-                            <SparkleIcon className="h-6 w-6 me-2 text-purple-700 animate-pulse" />
+                            <SparklesIcon className="h-6 w-6 me-2 text-purple-700 animate-pulse" />
                             <span className="self-center text-md lg:text-xl font-semibold whitespace-nowrap dark:text-white">
                                 {AppConstants.AppName}
                             </span>
@@ -75,18 +88,22 @@ export default function Header() {
                             ))}
                             <li>
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger className="py-2 pl-3 pr-4 lg:p-0">Apps</DropdownMenuTrigger>
+                                    <DropdownMenuTrigger className="py-2 pl-3 pr-4 lg:p-0">
+                                        <div className="flex items-center">
+                                            Apps<CircleChevronDown className="ms-2 h-4 w-4" />
+                                        </div>
+                                    </DropdownMenuTrigger>
                                     <DropdownMenuContent align="center" className="mt-1.5 pl-3">
                                         <DropdownMenuLabel>AI tools and services</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         {AppConstants.Apps.map((item) => (
-                                            <DropdownMenuItem key={item.title}>
-                                                <Link href={item.path} legacyBehavior>
-                                                    <a className={`block py-2 pl-3 pr-4 ${pathname === item.path ? "text-purple-700" : "text-gray-700"}  text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}>
+                                            <DropdownMenuItem key={item.title} asChild>
+                                                <Link href={item.path} className={`${pathname === item.path ? "text-purple-700" : "text-gray-700"}  text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}>
+                                                    <div className="block py-2 pl-3 pr-4 cursor-pointer">
                                                         <b className="text-sm font-semibold leading-6">{item.title}</b>
                                                         <br />
                                                         {item.description}
-                                                    </a>
+                                                    </div>
                                                 </Link>
                                             </DropdownMenuItem>
                                         ))}
@@ -95,23 +112,13 @@ export default function Header() {
                             </li>
                         </ul>
                     </div>
-                    <div className="flex items-center">
-                        {username && (
-                            <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                    <Button variant="ghost">
-                                        {username}
-                                        <CircleChevronDown className="ms-2 h-4 w-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem onClick={async () => { await signOut(); }}>Logout</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                    <div className={`flex items-center w-full sm:w-auto ${isMobileMenuOpen ? "" : "hidden sm:block"}`}>
+                        {isLoggedIn && (
+                            <>
+                                <Button onClick={async () => { await signOut(); }} className="w-full mt-4 sm:w-auto sm:mt-2">
+                                    Logout
+                                </Button>
+                            </>
                         )}
                     </div>
                 </div>
