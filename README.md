@@ -10,6 +10,12 @@ Currently, the app features two AI-powered tools:
 - Live Deployment: [Amplify AI Apps](https://main.dv2wiefoyjqb9.amplifyapp.com)
 - Source Code: [GitHub Repository](https://github.com/ankushjain358/aws-amplify-gen2-bedrock-ai-apps)
 
+### Instagram Captions Generator
+![System Architecture](./docs/instagram-caption-generator.png)
+
+### Text Rephraser
+![System Architecture](./docs/text-rephraser.png)
+
 ## Tech Stack
 - **Backend**: AWS Amplify Gen2, TypeScript
 - **Frontend**: Next.js, React, Tailwind CSS, Shadcn UI
@@ -18,7 +24,7 @@ Currently, the app features two AI-powered tools:
 - **Hosting**: AWS Amplify
 
 ## Architecture
-![System Architecture](./architecture.png)
+![System Architecture](./docs/architecture.png)
 
 ## Pre-requisite for running App
 1. AWS Account

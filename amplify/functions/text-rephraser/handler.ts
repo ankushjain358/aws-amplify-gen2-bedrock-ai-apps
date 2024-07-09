@@ -42,7 +42,7 @@ export const handler: Schema['rephraseText']['functionHandler'] = async (event, 
 
 
         const responseTemplate = `Here is the response HTML template\n
-        <div class="mb-2 text-base font-semibold text-gray-900 dark:text-white">
+        <div class="mb-5 text-base font-semibold text-gray-900 dark:text-white">
             <!-- Description goes here -->
         </div>
         <div class="w-full space-y-1dark:text-gray-400">
