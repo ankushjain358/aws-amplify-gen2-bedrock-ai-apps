@@ -3,8 +3,8 @@
 This is a simple app that demonstrates how to build Generative AI apps with AWS Amplify Gen2 and Amazon Bedrock.
 
 Currently, the app features two AI-powered tools:
-1. **Instagram Captions Generator** - Use AI to rephrase text
-2. **Text Rephraser** - Use AI to generate captions for Instagram posts
+1. **Instagram Captions Generator** - Use AI to generate captions for Instagram posts
+2. **Text Rephraser** - Use AI to rephrase text
 
 ## Demo
 - Live Deployment: [Amplify AI Apps](https://main.dv2wiefoyjqb9.amplifyapp.com)
