@@ -11,7 +11,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppConstants, AppNames } from "@/utils/AppConstants";
 import Link from "next/link";
-import { ArrowLeftCircle, Loader2 } from "lucide-react";
+import { ArrowLeftCircle, Disc3Icon, Loader2 } from "lucide-react";
 import notificationService from "@/utils/NotificationService";
 import commonService from "@/utils/CommonService";
 import React from "react";
@@ -47,6 +47,7 @@ function InstagramCaptionsGeneratorComponent() {
     const client = generateClient<Schema>()
     const storageManagerRef = React.useRef<any>(null);
     const [apiResponse, setApiResponse] = React.useState<string>("");
+    const [previewImage, setPreviewImage] = React.useState<string>("");
 
     // 1. Define  schema.
     const formSchema = z.object({
@@ -74,6 +75,9 @@ function InstagramCaptionsGeneratorComponent() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
+
+        // reset response
+        setApiResponse("");
 
         const { data, errors } = await client.queries.generateInstagramCaptions({
             s3Key: values.s3Key,
@@ -132,7 +136,14 @@ function InstagramCaptionsGeneratorComponent() {
                                                     dropFilesText: 'Drop your image here or',
                                                 }}
                                                 onUploadSuccess={(file: any) => {
+
+                                                    // update attached field
                                                     onChange(file.key);
+
+                                                    // update preview and remove old response
+                                                    setPreviewImage(file.key);
+                                                    setApiResponse("");
+
                                                     setTimeout(() => {
                                                         storageManagerRef.current?.clearFiles();
                                                     }, 1000);
@@ -229,13 +240,23 @@ function InstagramCaptionsGeneratorComponent() {
                     <CardHeader>
                         <CardTitle>Result</CardTitle>
                         <CardDescription>
-                            {form.getValues('s3Key') &&
-                                <StorageImage alt={form.getValues('s3Key')} path={form.getValues('s3Key')} maxHeight="200px" maxWidth="100%" />
-                            }
-                            <div className="content" dangerouslySetInnerHTML={{ __html: apiResponse }}></div>
+                            The AI generated captions will appear here
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
+                        {previewImage &&
+                            <div className="flex justify-center mb-5">
+                                <StorageImage alt={previewImage} path={previewImage} maxHeight="200px" maxWidth="100%" />
+                            </div>
+                        }
+
+                        {isSubmitting &&
+                            <div className="flex justify-center mt-10">
+                                <Disc3Icon className="mr-2 h-10 w-10 animate-spin" />
+                            </div>
+                        }
+
+                        <div dangerouslySetInnerHTML={{ __html: apiResponse }}></div>
                     </CardContent>
                 </Card>
             </div>

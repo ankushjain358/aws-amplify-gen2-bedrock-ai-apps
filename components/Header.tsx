@@ -1,7 +1,7 @@
 "use client"
 
 import { AppConstants } from "@/utils/AppConstants";
-import { CircleChevronDown, MenuIcon, SparkleIcon, SparklesIcon, XIcon } from "lucide-react";
+import { CircleChevronDown, MenuIcon, SparklesIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { fetchAuthSession, getCurrentUser, signOut } from 'aws-amplify/auth';
+import { fetchAuthSession, signOut } from 'aws-amplify/auth';
 import { Button } from "./ui/button";
 import EventService from "@/utils/EventService";
 
