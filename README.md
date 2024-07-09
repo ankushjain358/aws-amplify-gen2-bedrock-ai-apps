@@ -7,7 +7,7 @@ Currently, the app features two AI-powered tools:
 2. **Text Rephraser** - Use AI to generate captions for Instagram posts
 
 ## Demo
-- Live Deployment: [Amplify AI Apps]()
+- Live Deployment: [Amplify AI Apps](https://main.dv2wiefoyjqb9.amplifyapp.com)
 - Source Code: [GitHub Repository](https://github.com/ankushjain358/aws-amplify-gen2-bedrock-ai-apps)
 
 ## Tech Stack
