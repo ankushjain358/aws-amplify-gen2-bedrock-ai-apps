@@ -170,6 +170,9 @@ function InstagramCaptionsGeneratorComponent() {
                                                 <Input placeholder="Add little context about image...(optional)" {...field} />
                                             </FormControl>
                                             <FormMessage />
+                                            <FormDescription>
+                                                This will help the AI to generate better captions.
+                                            </FormDescription>
                                         </FormItem>
                                     )}
                                 />

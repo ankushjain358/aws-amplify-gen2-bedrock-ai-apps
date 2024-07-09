@@ -1,16 +1,28 @@
 # Full-Stack AI Apps with AWS Amplify Gen2 and Amazon Bedrock
 
-## Pre-requisite
-1. 
+This is a simple app that demonstrates how to build Generative AI apps with AWS Amplify Gen2 and Amazon Bedrock.
+
+Currently, the app features two AI-powered tools:
+1. **Instagram Captions Generator** - Use AI to rephrase text
+2. **Text Rephraser** - Use AI to generate captions for Instagram posts
+
+## Demo
+- Live Deployment: [Amplify AI Apps]()
+- Source Code: [GitHub Repository](https://github.com/ankushjain358/aws-amplify-gen2-bedrock-ai-apps)
 
 ## Tech Stack
-1. Next.js
-2. AWS Amplify Gen2
-3. TypeScript
-4. Shadcn UI
+- **Backend**: AWS Amplify Gen2, TypeScript
+- **Frontend**: Next.js, React, Tailwind CSS, Shadcn UI
+- **AWS Amplify Technologies**: Data (Amazon DynamoDB), Authentication (Amazon Cognito), Serverless Functions (AWS Lambda), File Storage (S3)
+- **AWS Others**:  AWS CDK, Amazon Bedrock
+- **Hosting**: AWS Amplify
 
 ## Architecture
-TODO
+![System Architecture](./architecture.png)
+
+## Pre-requisite for running App
+1. AWS Account
+2. On the Model access page in **Amazon Bedrock**, Enable access for  `anthropic.claude-3-haiku-20240307-v1:0` model.
 
 ## Running App Locally
 1. Clone the repository on your local machine.
@@ -20,6 +32,6 @@ TODO
 4. Run `npm run dev` to run the app.
 5. Open `http://localhost:3000` with your browser to see the result.
 
-## Deploy on Amplify
+## Deploying to AWS
 1. Fork the repository in your GitHub account.
-2. TODO
+2. Follow the detailed instructions on deploying your application, refer to the [deployment section](https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/#deploy-a-fullstack-app-to-aws) of our documentation.

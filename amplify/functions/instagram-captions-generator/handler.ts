@@ -33,7 +33,6 @@ export const handler: Schema['generateInstagramCaptions']['functionHandler'] = a
             "If image context is provided, incorporate it into the captions to make them more meaningful and appealing.",
             "Ensure the captions are suitable for a broad audience and capture the essence of the image.",
             "Below are some useful pieces of information that you can use when generating captions.",
-            // "Images may contain human faces, you don't need to identify them, for you they are anonymous person. You just need to focus on generating captions."
         ];
 
         // Add the image context information

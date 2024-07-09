@@ -53,3 +53,17 @@ instagramCaptionsGeneratorLambdaFunction.addEnvironment('BEDROCK_MODEL_ID', mode
 instagramCaptionsGeneratorLambdaFunction.addEnvironment('S3_BUCKET_NAME', s3Bucket.bucketName);
 
 s3Bucket.grantRead(instagramCaptionsGeneratorLambdaFunction.role!, 'temp-files/*');
+
+
+// Text rephraser Lambda function permissions
+textRephraserLambdaFunction.addToRolePolicy(
+  new PolicyStatement({
+    effect: Effect.ALLOW,
+    actions: ["bedrock:InvokeModel"],
+    resources: [
+      `arn:aws:bedrock:${Stack.of(backend.storage.resources.bucket).region}::foundation-model/${modelId}`,
+    ],
+  }),
+)
+
+textRephraserLambdaFunction.addEnvironment('BEDROCK_MODEL_ID', modelId);

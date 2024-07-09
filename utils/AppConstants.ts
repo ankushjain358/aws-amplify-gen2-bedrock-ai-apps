@@ -12,12 +12,13 @@ interface IAppConstants {
     AppName: string,
     AppDescription: string,
     TopLevelMenuItems: MenuItem[]
-    Apps: App[]
+    Apps: App[],
+    AppGitHubUrl: string
 }
 
 export class AppNames {
     static readonly TEXT_REPHRASER = "Text Rephraser";
-    static readonly INSTAGRAM_CAPTIONS_GENERATOR = "Instragram Captions Generator";
+    static readonly INSTAGRAM_CAPTIONS_GENERATOR = "Instagram Captions Generator";
 };
 
 export const AppConstants: IAppConstants = {
@@ -44,5 +45,6 @@ export const AppConstants: IAppConstants = {
             description: "Use AI to generate captions for Instagram posts",
             path: "/apps/instragram-captions-generator"
         }
-    ]
+    ],
+    AppGitHubUrl: "https://github.com/ankushjain358/aws-amplify-gen2-bedrock-ai-apps"
 }

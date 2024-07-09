@@ -28,7 +28,7 @@ const schema = a.schema({
     .query()
     .arguments({
       text: a.string().required(),
-      additionalPrompt: a.string(),
+      context: a.string(),
     })
     .returns(a.ref('genericAPIResponse'))
     .handler(a.handler.function(textRephraser))
